@@ -1,4 +1,11 @@
-/* tetrominos: 
+var GAME = GAME || {}
+
+var Tetromino = function() {
+  "use strict";
+
+
+};
+/* tetrominos:
 [
   I = {
     color: light blue,

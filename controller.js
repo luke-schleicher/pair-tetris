@@ -1,3 +1,23 @@
+var GAME = GAME || {}
+
+GAME.Controller = function() {
+  "use strict";
+
+    var _board = GAME.Board;
+    var _view = GAME.View;
+
+  return {
+
+    play: function() {
+      var initialBoard = _board.init();
+      _view.init(initialBoard);
+      // _loop();
+    },
+
+  }
+
+
+}();
 // Play
   // board = Initialize board
   // view.init(board)
