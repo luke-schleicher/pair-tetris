@@ -3,17 +3,23 @@ var GAME = GAME || {}
 GAME.Controller = function() {
   "use strict";
 
-    var _board = GAME.Board;
-    var _view = GAME.View;
+  var _board = GAME.Board;
+  var _view = GAME.View;
+
+  var _loop = function() {
+   var interval = setInterval(function(){
+    var boardState = _board.tic();
+    _view.render(boardState);
+   }, 200);
+  }
 
   return {
 
     play: function() {
       var initialBoard = _board.init();
       _view.init(initialBoard);
-      // _loop();
-    },
-
+      _loop();
+    }
   }
 
 

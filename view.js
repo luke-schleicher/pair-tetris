@@ -17,6 +17,37 @@ GAME.View = function() {
     });
   };
 
+  var _render = function(boardState) {
+    _clearTetromino(boardstate.lastTetromino);
+    _renderTetronimo(boardState.currentTetromino);
+  };
+
+  var _clearTetromino = function(tetronimo) {
+    tetronimo.blocks.forEach(function(block) {
+      _clearBlock(block);
+    }); 
+  };
+
+  var _renderTetronimo = function(tetronimo) {
+    tetronimo.blocks.forEach(function(block) {
+      _renderBlock(block);
+    }); 
+  };
+
+  var _clearBlock = function(block) {
+    var $cell = _findCell(block.x, block.y);
+    $cell.className("");
+  };
+
+  var _renderBlock = function(block) {
+    var $cell = _findCell(block.x, block.y);
+    $cell.className(block.color);
+  };
+
+  var _findCell = function(x, y) {
+    return $("#" + x + "-" + y);
+  }
+
   return {
     init: function(rows) {
       _$board = $("#board");
