@@ -6,12 +6,12 @@ GAME.Board = function() {
 
   var _width = GAME.CONFIG.board.width;
   var _height = GAME.CONFIG.board.height;
+  var _TetrominoFactory = GAME.TetrominoFactory;
   var _currentTetromino;
   var _moveCurrentTetromino;
   var _rows;
   var _updateStack;
-  var _boardState;
-  var _TetronimoFactory: GAME.TetronimoFactory;
+  var _boardState = {};
 
   var _setRows = function() {
     _rows = new Array(_height);
@@ -26,16 +26,16 @@ GAME.Board = function() {
   };
 
   var _randomOriginX = function() {
-    return GAME.helpers.randBetween(1, _width - 1)
+    return GAME.helpers.randBetween(1, _width - 2)
   }
 
   var _createCurrentTetromino = function() {
-    var currentTetronimo = _TetronimoFactory.createRandom(_randomOriginX());
-    _currentTetromino = currentTetronimo;
+    var currentTetromino = _TetrominoFactory.createRandom(_randomOriginX());
+    _currentTetromino = currentTetromino;
   };
 
-  var getBoardState = function() {
-    _boardState.currentTetronimo = _currentTetromino;
+  var _getBoardState = function() {
+    _boardState.currentTetromino = _currentTetromino;
     return _boardState;
   };
 
@@ -43,8 +43,8 @@ GAME.Board = function() {
     _currentTetromino.tic()
   };
 
-  var _saveCurrentTetronimo = function() {
-    _boardState.lastTetronimo = _currentTetromino;
+  var _saveCurrentTetromino = function() {
+    _boardState.lastTetromino = _currentTetromino;
   }
 
   return {
@@ -53,7 +53,7 @@ GAME.Board = function() {
     },
 
     tic: function() {
-      _saveCurrentTetronimo();
+      _saveCurrentTetromino();
       if (!_currentTetromino) {
         _createCurrentTetromino();
       }

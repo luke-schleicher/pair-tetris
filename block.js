@@ -6,7 +6,7 @@ GAME.BlockFactory = function() {
   var _Block = function Block(options) {
     this.x = options.x;
     this.y = options.y;
-    this.color = options.color;
+    this.name = options.name;
   };
 
   return {
@@ -14,7 +14,7 @@ GAME.BlockFactory = function() {
       return new _Block(options);
     }
   }
-};
+}();
 // block
   // x and y
   // color

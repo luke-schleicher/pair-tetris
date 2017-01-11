@@ -1,6 +1,6 @@
 var GAME = GAME || {}
 
-var TetrominoFactory = function() {
+GAME.TetrominoFactory = function() {
   "use strict";
 
   var BlockFactory = GAME.BlockFactory;
@@ -8,8 +8,7 @@ var TetrominoFactory = function() {
   var _shapes = [
     {
       name: "I",
-      starting: [{ x: 0, y: 0 }],
-      color: "#cdcdcd"
+      starting: [{ x: 0, y: 0 }]
     }
   ];
 
@@ -26,15 +25,18 @@ var TetrominoFactory = function() {
       that.blocks[index] = BlockFactory.create({
         x: block.x + originX,
         y: block.y,
-        color: shape.color
+        name: shape.name
       })
     });
 
     this.tic = function() {
       this.blocks.forEach(function(block) {
-      block.y--;
-    });
+        block.y++;
+      });
+    };
+
   };
+
 
   return {
     createRandom: function(originX) {
@@ -42,4 +44,4 @@ var TetrominoFactory = function() {
       return new _Tetromino(shape, originX);
     }
   };
-};
+}();

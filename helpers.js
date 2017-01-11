@@ -2,7 +2,7 @@ var GAME = GAME || {};
 
 GAME.helpers = {
   randArrayElement: function(array) {
-    var randIndex = Math.floor(Math.random() * array.length - 1)
+    var randIndex = Math.floor(Math.random() * (array.length - 1))
     return array[randIndex];
   },
 

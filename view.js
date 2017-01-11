@@ -17,31 +17,26 @@ GAME.View = function() {
     });
   };
 
-  var _render = function(boardState) {
-    _clearTetromino(boardstate.lastTetromino);
-    _renderTetronimo(boardState.currentTetromino);
-  };
-
-  var _clearTetromino = function(tetronimo) {
-    tetronimo.blocks.forEach(function(block) {
+  var _clearTetromino = function(tetromino) {
+    tetromino.blocks.forEach(function(block) {
       _clearBlock(block);
-    }); 
+    });
   };
 
-  var _renderTetronimo = function(tetronimo) {
-    tetronimo.blocks.forEach(function(block) {
+  var _renderTetromino = function(tetromino) {
+    tetromino.blocks.forEach(function(block) {
       _renderBlock(block);
-    }); 
+    });
   };
 
   var _clearBlock = function(block) {
     var $cell = _findCell(block.x, block.y);
-    $cell.className("");
+    $cell.removeClass(block.name);
   };
 
   var _renderBlock = function(block) {
     var $cell = _findCell(block.x, block.y);
-    $cell.className(block.color);
+    $cell.addClass(block.name);
   };
 
   var _findCell = function(x, y) {
@@ -52,7 +47,15 @@ GAME.View = function() {
     init: function(rows) {
       _$board = $("#board");
       _setRows(rows);
+    },
+
+    render: function(boardState) {
+      if (boardState.lastTetromino) {
+        _clearTetromino(boardState.lastTetromino);
+      }
+      _renderTetromino(boardState.currentTetromino);
     }
+
   };
 
 }();
