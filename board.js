@@ -94,8 +94,33 @@ GAME.Board = function() {
         _processCollision();
       };
       return _getBoardState();
+    },
+
+    movePiece: function(pressedKey) {
+      switch (pressedKey) {
+      // case 'ArrowUp':
+      //   if (model.direction !== 'down') {
+      //     model.direction = 'up';
+      //   }
+      //   break;
+      case 'ArrowRight':
+        if (model.direction !== 'left') {
+          model.direction = 'right';
+        }
+        break;
+      // case 'ArrowDown':
+      //   if (model.direction !== 'up') {
+      //     model.direction = 'down';
+      //   }
+      //   break;
+      case 'ArrowLeft':
+        if (model.direction !== 'right') {
+          model.direction = 'left';
+        }
+        break;
     }
-  };
+  }
+}
 
 }();
 /*

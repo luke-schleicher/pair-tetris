@@ -41,12 +41,19 @@ GAME.View = function() {
 
   var _findCell = function(x, y) {
     return $("#" + x + "-" + y);
-  }
+  };
+
+  var _addMoveListener = function(movePiece) {
+    $(document).on('keydown', function(event) {
+      movePiece(event.originalEvent.code);
+    });
+  };
 
   return {
-    init: function(rows) {
+    init: function(rows, movePiece) {
       _$board = $("#board");
       _setRows(rows);
+      _addMoveListener(movePiece);
     },
 
     render: function(boardState) {

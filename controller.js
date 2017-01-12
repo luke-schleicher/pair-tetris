@@ -10,13 +10,17 @@ GAME.Controller = function() {
   var interval = setInterval(function(){
     var boardState = _board.tic();
     _view.render(boardState);
-  }, 100);
-  }
+    }, 100);
+  };
+
+  var _movePiece = function(pressedKey) {
+    _board.movePiece(pressedKey);
+  };
 
   return {
     play: function() {
       var initialBoard = _board.init();
-      _view.init(initialBoard);
+      _view.init(initialBoard, _movePiece);
       _loop();
     }
   }
