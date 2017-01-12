@@ -26,7 +26,7 @@ GAME.Board = function() {
   };
 
   var _randomOriginX = function() {
-    return 5;
+    return 4;
   }
 
   var _createCurrentTetromino = function() {
@@ -46,7 +46,7 @@ GAME.Board = function() {
   };
 
   var _saveCurrentTetromino = function() {
-    _boardState.lastTetromino = _currentTetromino;
+    _boardState.lastTetromino = dupTetromino();
   };
 
   var _checkCollision = function() {
@@ -78,6 +78,10 @@ GAME.Board = function() {
     return tetrominoBlock.y === _height - 1;
   };
 
+  var dupTetromino = function() {
+    return $.extend(true, { }, _currentTetromino);    
+  };
+
   return {
     init: function() {
       return _setRows();
@@ -96,7 +100,10 @@ GAME.Board = function() {
       return _getBoardState();
     },
 
-    movePiece: function(pressedKey) {
+    moveTetromino: function(pressedKey) {
+
+      _boardState.lastTetromino = dupTetromino();
+
       switch (pressedKey) {
       // case 'ArrowUp':
       //   if (model.direction !== 'down') {
@@ -104,9 +111,9 @@ GAME.Board = function() {
       //   }
       //   break;
       case 'ArrowRight':
-        if (model.direction !== 'left') {
-          model.direction = 'right';
-        }
+        _currentTetromino.blocks.forEach(function(block) {
+          block.x++;
+        });
         break;
       // case 'ArrowDown':
       //   if (model.direction !== 'up') {
@@ -114,9 +121,9 @@ GAME.Board = function() {
       //   }
       //   break;
       case 'ArrowLeft':
-        if (model.direction !== 'right') {
-          model.direction = 'left';
-        }
+        _currentTetromino.blocks.forEach(function(block) {
+          block.x--;
+        });
         break;
     }
   }

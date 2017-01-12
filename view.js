@@ -30,7 +30,7 @@ GAME.View = function() {
   };
 
   var _clearBlock = function(block) {
-    var $cell = _findCell(block.x, block.y - 1);
+    var $cell = _findCell(block.x, block.y);
     $cell.attr("class", "cell");
   };
 

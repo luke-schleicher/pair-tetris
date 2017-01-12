@@ -13,14 +13,14 @@ GAME.Controller = function() {
     }, 100);
   };
 
-  var _movePiece = function(pressedKey) {
-    _board.movePiece(pressedKey);
+  var _moveTetromino = function(pressedKey) {
+    _board.moveTetromino(pressedKey);
   };
 
   return {
     play: function() {
       var initialBoard = _board.init();
-      _view.init(initialBoard, _movePiece);
+      _view.init(initialBoard, _moveTetromino);
       _loop();
     }
   }
