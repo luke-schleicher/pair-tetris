@@ -8,7 +8,7 @@ GAME.View = function() {
 
   var _setRows = function(rows) {
     rows.forEach(function(row, rowIndex) {
-      var $row = $("<div>").addClass("row");
+      var $row = $("<div>").addClass("row").attr("id", rowIndex);
       row.forEach(function(cell, cellIndex) {
         var $cell = $("<div>").addClass("cell").attr("id", cellIndex + "-" + rowIndex);
         $row.append($cell);
