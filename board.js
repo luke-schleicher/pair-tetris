@@ -8,10 +8,12 @@ GAME.Board = function() {
   var _height = GAME.CONFIG.board.height;
   var _TetrominoFactory = GAME.TetrominoFactory;
   var _currentTetromino;
+  var blockFactory = GAME.BlockFactory;
   var _rows;
   var _newPlacedBlocks = false;
   var _boardState = {};
   var _placedBlocks = [];
+
 
   var _setRows = function() {
     _rows = new Array(_height);
@@ -35,6 +37,7 @@ GAME.Board = function() {
   };
 
   var _getBoardState = function() {
+    console.log(_boardState.lastTetromino);
     _boardState.currentTetromino = _currentTetromino;
     _boardState.placedBlocks = _placedBlocks;
     _boardState.newPlacedBlocks = _newPlacedBlocks;
@@ -46,7 +49,9 @@ GAME.Board = function() {
   };
 
   var _saveCurrentTetromino = function() {
-    _boardState.lastTetromino = dupTetromino();
+    if (_currentTetromino) {
+      dupTetromino();
+    }
   };
 
   var _checkCollision = function() {
@@ -79,7 +84,14 @@ GAME.Board = function() {
   };
 
   var dupTetromino = function() {
-    return $.extend(true, { }, _currentTetromino);    
+
+    _boardState.lastTetromino = [];
+
+    _currentTetromino.blocks.forEach(function(block){
+      var newBlock = blockFactory.create(block);
+      _boardState.lastTetromino.push(newBlock);
+    });
+
   };
 
   return {
@@ -102,32 +114,28 @@ GAME.Board = function() {
 
     moveTetromino: function(pressedKey) {
 
-      _boardState.lastTetromino = dupTetromino();
+      // set last tetromino
+      dupTetromino();
 
       switch (pressedKey) {
-      // case 'ArrowUp':
-      //   if (model.direction !== 'down') {
-      //     model.direction = 'up';
-      //   }
-      //   break;
+
       case 'ArrowRight':
         _currentTetromino.blocks.forEach(function(block) {
           block.x++;
         });
         break;
-      // case 'ArrowDown':
-      //   if (model.direction !== 'up') {
-      //     model.direction = 'down';
-      //   }
-      //   break;
+
       case 'ArrowLeft':
         _currentTetromino.blocks.forEach(function(block) {
           block.x--;
         });
         break;
+
+      }
+      return _getBoardState();
+    
     }
-  }
-}
+  },
 
 }();
 /*

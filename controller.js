@@ -10,11 +10,12 @@ GAME.Controller = function() {
   var interval = setInterval(function(){
     var boardState = _board.tic();
     _view.render(boardState);
-    }, 100);
+    }, 1000);
   };
 
   var _moveTetromino = function(pressedKey) {
-    _board.moveTetromino(pressedKey);
+    var boardState = _board.moveTetromino(pressedKey);
+    _view.render(boardState);
   };
 
   return {

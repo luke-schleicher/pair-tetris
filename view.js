@@ -18,7 +18,11 @@ GAME.View = function() {
   };
 
   var _clearTetromino = function(tetromino) {
-    tetromino.blocks.forEach(_clearBlock);
+    if (tetromino.blocks) {
+      tetromino.blocks.forEach(_clearBlock);      
+    } else {
+      tetromino.forEach(_clearBlock);
+    }
   };
 
   var _renderTetromino = function(tetromino) {
@@ -30,7 +34,7 @@ GAME.View = function() {
   };
 
   var _clearBlock = function(block) {
-    var $cell = _findCell(block.x, block.y);
+    var $cell = _findCell(block.x, block.y - 1);
     $cell.attr("class", "cell");
   };
 
@@ -57,6 +61,13 @@ GAME.View = function() {
     },
 
     render: function(boardState) {
+
+      console.log("last tetromino");
+      console.log(boardState.lastTetromino);
+      console.log("current tetromino");
+      console.log(boardState.currentTetromino);
+
+
       if (boardState.lastTetromino) {
         _clearTetromino(boardState.lastTetromino);
       }
