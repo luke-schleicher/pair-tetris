@@ -8,7 +8,31 @@ GAME.TetrominoFactory = function() {
   var _shapes = [
     {
       name: "I",
-      starting: [{ x: 0, y: 0 }]
+      starting: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }, { x: 3, y: -1 }]
+    },
+    {
+      name: "J",
+      starting: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }, { x: 2, y: 0 } ]
+    },
+    {
+      name: "L",
+      starting: [{ x: 0, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }]
+    },
+    {
+      name: "O",
+      starting: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 0, y: -1 }]
+    },
+    {
+      name: "S",
+      starting: [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 1, y: -1 }, { x: 2, y: -1 }]
+    },
+    {
+      name: "T",
+      starting: [{ x: 1, y: 0 }, { x: 0, y: -1 }, { x: 1, y: -1 }, { x: 2, y: -1 }]
+    },
+    {
+      name: "Z",
+      starting: [{ x: 0, y: -1 }, { x: 1, y: -1 }, { x: 1, y: 0 }, { x: 2, y: 0 }]
     }
   ];
 
@@ -42,6 +66,10 @@ GAME.TetrominoFactory = function() {
     createRandom: function(originX) {
       var shape = _randomShape();
       return new _Tetromino(shape, originX);
+    },
+
+    createDup: function(tetromino) {
+
     }
   };
 }();

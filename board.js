@@ -8,10 +8,10 @@ GAME.Board = function() {
   var _height = GAME.CONFIG.board.height;
   var _TetrominoFactory = GAME.TetrominoFactory;
   var _currentTetromino;
-  var _moveCurrentTetromino;
   var _rows;
-  var _updateStack;
+  var _newPlacedBlocks = false;
   var _boardState = {};
+  var _placedBlocks = [];
 
   var _setRows = function() {
     _rows = new Array(_height);
@@ -26,7 +26,7 @@ GAME.Board = function() {
   };
 
   var _randomOriginX = function() {
-    return GAME.helpers.randBetween(1, _width - 2)
+    return 5;
   }
 
   var _createCurrentTetromino = function() {
@@ -36,6 +36,8 @@ GAME.Board = function() {
 
   var _getBoardState = function() {
     _boardState.currentTetromino = _currentTetromino;
+    _boardState.placedBlocks = _placedBlocks;
+    _boardState.newPlacedBlocks = _newPlacedBlocks;
     return _boardState;
   };
 
@@ -45,7 +47,36 @@ GAME.Board = function() {
 
   var _saveCurrentTetromino = function() {
     _boardState.lastTetromino = _currentTetromino;
-  }
+  };
+
+  var _checkCollision = function() {
+    for (var i = 0; i < _currentTetromino.blocks.length; i++) {
+      var tetrominoBlock = _currentTetromino.blocks[i];
+      if (_atBottom(tetrominoBlock)) {return true;}
+      for (var j = 0; j < _placedBlocks.length; j++) {
+        var block = _placedBlocks[j]
+        if (_blockCollision(tetrominoBlock, block)) {
+          return true;
+        }
+      };
+    };
+  };
+
+  var _processCollision = function() {
+    _currentTetromino.blocks.forEach(function(block) {
+      _placedBlocks.push(block);
+    })
+    _currentTetromino = null;
+    _newPlacedBlocks = true;
+  };
+
+  var _blockCollision = function(tetrominoBlock, block) {
+    return tetrominoBlock.y + 1 === block.y && tetrominoBlock.x === block.x
+  };
+
+  var _atBottom = function(tetrominoBlock) {
+    return tetrominoBlock.y === _height - 1;
+  };
 
   return {
     init: function() {
@@ -53,11 +84,15 @@ GAME.Board = function() {
     },
 
     tic: function() {
+      _newPlacedBlocks = false;
       _saveCurrentTetromino();
       if (!_currentTetromino) {
         _createCurrentTetromino();
       }
       _ticCurrentTetromino();
+      if (_checkCollision()) {
+        _processCollision();
+      };
       return _getBoardState();
     }
   };
