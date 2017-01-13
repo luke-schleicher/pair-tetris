@@ -19,7 +19,7 @@ GAME.View = function() {
 
   var _clearTetromino = function(tetromino) {
     if (tetromino.blocks) {
-      tetromino.blocks.forEach(_clearBlock);      
+      tetromino.blocks.forEach(_clearBlock);
     } else {
       tetromino.forEach(_clearBlock);
     }
@@ -34,7 +34,7 @@ GAME.View = function() {
   };
 
   var _clearBlock = function(block) {
-    var $cell = _findCell(block.x, block.y - 1);
+    var $cell = _findCell(block.x, block.y);
     $cell.attr("class", "cell");
   };
 

@@ -10,7 +10,7 @@ GAME.Board = function() {
   var _currentTetromino;
   var blockFactory = GAME.BlockFactory;
   var _rows;
-  var _newPlacedBlocks = false;
+  var _newPlacedBlocks = true;
   var _boardState = {};
   var _placedBlocks = [];
 
@@ -50,7 +50,7 @@ GAME.Board = function() {
 
   var _saveCurrentTetromino = function() {
     if (_currentTetromino) {
-      dupTetromino();
+      _dupTetrominoTetromino();
     }
   };
 
@@ -83,7 +83,7 @@ GAME.Board = function() {
     return tetrominoBlock.y === _height - 1;
   };
 
-  var dupTetromino = function() {
+  var _dupTetrominoTetromino = function() {
 
     _boardState.lastTetromino = [];
 
@@ -94,13 +94,23 @@ GAME.Board = function() {
 
   };
 
+  var _outOfBounds = function() {
+    _currentTetromino.blocks.forEach(function(block){
+      console.log(block.x - 1)
+      if (block.x - 1 < 0 || block.x + 1 > 9) {
+        return true;
+      }
+    });
+    return false;
+  };
+
   return {
     init: function() {
       return _setRows();
     },
 
     tic: function() {
-      _newPlacedBlocks = false;
+      _newPlacedBlocks = true;
       _saveCurrentTetromino();
       if (!_currentTetromino) {
         _createCurrentTetromino();
@@ -113,29 +123,37 @@ GAME.Board = function() {
     },
 
     moveTetromino: function(pressedKey) {
-
       // set last tetromino
-      dupTetromino();
+      // _dupTetrominoTetromino();
 
       switch (pressedKey) {
 
       case 'ArrowRight':
-        _currentTetromino.blocks.forEach(function(block) {
-          block.x++;
-        });
+        if (!_outOfBounds()) {
+          _dupTetrominoTetromino();
+          _currentTetromino.blocks.forEach(function(block) {
+            block.x++;
+          });
+        }
         break;
 
       case 'ArrowLeft':
+      if (!_outOfBounds()) {
+        _dupTetrominoTetromino();
         _currentTetromino.blocks.forEach(function(block) {
-          block.x--;
+          block.x--
         });
+      }
         break;
+      default:
+        return;
 
       }
+
       return _getBoardState();
-    
+
     }
-  },
+  }
 
 }();
 /*
